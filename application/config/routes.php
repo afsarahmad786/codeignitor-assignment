@@ -60,6 +60,10 @@ $route['auth/send_reset_link'] = 'Auth/send_reset_link';
 $route['auth/reset_password/(:any)'] = 'Auth/reset_password/$1';
 $route['auth/update_password'] = 'Auth/update_password';
 $route['auth/test_email'] = 'Auth/test_email';
+$route['settings'] = 'auth/settings';
+$route['auth/change_password'] = 'auth/change_password';
+$route['auth/update_profile'] = 'auth/update_profile';
+
 // Migrations
 $route['migrate'] = 'MigrationController/migrate';  // Apply the latest migration
 $route['rollback'] = 'MigrationController/rollback';  // Rollback all migrations

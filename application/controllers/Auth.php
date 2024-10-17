@@ -165,5 +165,74 @@ class Auth extends CI_Controller {
         }
         return null;
     }
-    
+
+ // Profile settings view
+ public function settings() {
+    $user_id = $this->session->userdata('user_id');
+    $data['user'] = $this->User_model->get_user($user_id);
+    $this->load->view('auth/settings', $data);
 }
+
+// Handle profile update
+public function update_profile() {
+       // Assuming you have a user ID stored in the session
+       $user_id = $this->session->userdata('user')['id'];
+       
+       // Get the form input data
+       $data = [
+           'name' => $this->input->post('name'),
+           'email' => $this->input->post('email'),
+           'phone' => $this->input->post('phone')
+       ];
+ 
+       // Update the user data in the database
+       if ($this->User_model->update_user($user_id, $data)) {
+           // If the update is successful, set success message
+           $updated_user = $this->User_model->get_user($user_id);
+        
+           // Update the session data with the new user data
+           
+           $this->session->set_userdata('user', [
+               'id' => $updated_user->id,
+               'name' => $updated_user->name,
+               'email' => $updated_user->email,
+               'phone' => $updated_user->phone
+           ]);
+
+           $this->session->set_flashdata('success', 'Profile updated successfully.');
+       } else {
+           // If the update fails, set error message
+           $this->session->set_flashdata('error', 'Failed to update profile.');
+       }
+   
+       redirect('/settings');
+   }
+
+// Handle password change
+public function change_password() {
+    $email = $this->session->userdata('email');
+    $current_password = $this->input->post('current_password');
+    $new_password = $this->input->post('new_password');
+    $confirm_password = $this->input->post('confirm_password');
+
+    if ($new_password !== $confirm_password) {
+        $this->session->set_flashdata('error', 'Passwords do not match!');
+        redirect('settings');
+    }
+
+    $user = $this->User_model->get_user_by_email($email);
+
+    if (password_verify($current_password, $user->password)) {
+        $hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
+        $this->User_model->update_password($email, $hashed_password);
+        $this->session->set_flashdata('success', 'Password updated successfully!');
+        redirect('/login');
+    } else {
+        $this->session->set_flashdata('error', 'Incorrect current password.');
+    }
+
+    redirect('settings');
+}
+
+}
+

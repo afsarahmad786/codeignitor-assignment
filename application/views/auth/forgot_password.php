@@ -2,23 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
-<body>
-    <h1>Forgot Password</h1>
+<body class="bg-light d-flex align-items-center vh-100">
 
-    <?php if ($this->session->flashdata('error')): ?>
-        <p style="color: red;"><?php echo $this->session->flashdata('error'); ?></p>
-    <?php endif; ?>
-    <?php if ($this->session->flashdata('success')): ?>
-        <p style="color: green;"><?php echo $this->session->flashdata('success'); ?></p>
-    <?php endif; ?>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h4>Forgot Password</h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- Flash messages -->
+                        <?php if ($this->session->flashdata('error')): ?>
+                            <div class="alert alert-danger"><?php echo $this->session->flashdata('error'); ?></div>
+                        <?php endif; ?>
+                        <?php if ($this->session->flashdata('success')): ?>
+                            <div class="alert alert-success"><?php echo $this->session->flashdata('success'); ?></div>
+                        <?php endif; ?>
 
-    <form action="<?php echo base_url('auth/send_reset_link'); ?>" method="post">
-        <label for="email">Email:</label>
-        <input type="email" name="email" required><br><br>
+                        <form action="<?php echo base_url('auth/send_reset_link'); ?>" method="post">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" name="email" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Send Reset Link</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <button type="submit">Send Reset Link</button>
-    </form>
 </body>
 </html>

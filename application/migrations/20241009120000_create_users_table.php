@@ -1,9 +1,11 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Migration_Create_users_table extends CI_Migration {
+class Migration_Create_users_table extends CI_Migration
+{
 
-    public function up() {
+    public function up()
+    {
         // Check if the table exists
         if (!$this->db->table_exists('users')) {
             // If the table doesn't exist, create it
@@ -25,7 +27,18 @@ class Migration_Create_users_table extends CI_Migration {
                     'constraint' => '255',
                     'null' => FALSE
                 ],
+                'name' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => '100',
+                    'null' => TRUE
+                ],
+                'phone' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => '15',
+                    'null' => TRUE
+                ],
                 'created_at datetime default current_timestamp',
+                'updated_at datetime default current_timestamp',
             ]);
             $this->dbforge->add_key('id', TRUE);
             $this->dbforge->create_table('users');
@@ -34,7 +47,8 @@ class Migration_Create_users_table extends CI_Migration {
         }
     }
 
-    public function down() {
+    public function down()
+    {
         // Drop the users table if it exists
         if ($this->db->table_exists('users')) {
             $this->dbforge->drop_table('users');

@@ -31,5 +31,15 @@ class User_model extends CI_Model {
         $this->db->update('users', ['password' => $password]);
     }
 
+    public function get_user($user_id) {
+        return $this->db->where('id', $user_id)->get('users')->row();
+    }
+    
+      // Example method for updating user data
+      public function update_user($user_id, $data) {
+        // Use Active Record class to update user details
+        $this->db->where('id', $user_id);
+        return $this->db->update('users', $data);  // 'users' is the table name
+    }
     // Other user-related functions can be added here (e.g., login, update, delete)
 }
