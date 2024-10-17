@@ -1,70 +1,158 @@
-###################
-What is CodeIgniter
-###################
+---
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+# CodeIgniter 3.1.8 Authentication System
 
-*******************
-Release Information
-*******************
+This project demonstrates a **user authentication system** with features like **registration, login, password reset, profile update**, and JWT-based token authentication built on **CodeIgniter 3.1.8** with **PHP 7.4**.
 
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<https://codeigniter.com/download>`_ page.
+## Prerequisites
 
-**************************
-Changelog and New Features
-**************************
+Before starting, ensure that you have the following installed on your machine:
 
-You can find a list of all changes for each release in the `user
-guide change log <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_.
+- **PHP 7.4**
+- **CodeIgniter 3.1.8** or later
+- **Composer** (PHP Dependency Manager)
+- **Firebase JWT Package** for handling JSON Web Tokens
 
-*******************
-Server Requirements
-*******************
+## Getting Started
 
-PHP version 5.6 or newer is recommended.
+### Step 1: Clone the Repository
 
-It should work on 5.3.7 as well, but we strongly advise you NOT to run
-such old versions of PHP, because of potential security and performance
-issues, as well as missing features.
+```bash
+git clone https://github.com/your-repo/codeigniter-auth-system.git
+cd codeigniter-auth-system
+```
 
-************
-Installation
-************
+### Step 2: Set up CodeIgniter and PHP
 
-Please see the `installation section <https://codeigniter.com/user_guide/installation/index.html>`_
-of the CodeIgniter User Guide.
+1. Download and set up **CodeIgniter 3.1.8**:
+   - [Download CodeIgniter 3.1.8](https://codeigniter.com/download)
 
-*******
-License
-*******
+2. Ensure you are using **PHP 7.4** by checking your PHP version:
 
-Please see the `license
-agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst>`_.
+```bash
+php -v
+```
 
-*********
-Resources
-*********
+3. Extract the CodeIgniter package in your project folder if needed and ensure the project runs by navigating to:
 
--  `User Guide <https://codeigniter.com/docs>`_
--  `Language File Translations <https://github.com/bcit-ci/codeigniter3-translations>`_
--  `Community Forums <http://forum.codeigniter.com/>`_
--  `Community Wiki <https://github.com/bcit-ci/CodeIgniter/wiki>`_
--  `Community Slack Channel <https://codeigniterchat.slack.com>`_
+```bash
+http://localhost/CodeIgniter/
+```
 
-Report security issues to our `Security Panel <mailto:security@codeigniter.com>`_
-or via our `page on HackerOne <https://hackerone.com/codeigniter>`_, thank you.
+You should see the **Welcome to CodeIgniter** screen.
 
-***************
-Acknowledgement
-***************
+### Step 3: Database Configuration
 
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
+1. Create a MySQL database, e.g., `ignitor`.
+2. Update the database credentials in `application/config/database.php`:
+
+```php
+'hostname' => 'localhost',
+'username' => 'your_username',
+'password' => 'your_password',
+'database' => 'ignitor',
+```
+
+3. Run the migrations to set up the necessary database tables:
+
+```bash
+http://localhost/CodeIgniter/migrate
+```
+
+### Step 4: Install Dependencies
+
+Run the following composer command to install **Firebase JWT** package:
+
+```bash
+composer require firebase/php-jwt
+```
+
+This package is essential for implementing JWT-based authentication.
+
+### Step 5: Routing Configuration
+
+Ensure that the routes in `application/config/routes.php` are correctly set:
+
+```php
+$route['default_controller'] = 'welcome';
+$route['login'] = 'UserController/login_view';
+$route['register'] = 'UserController/index';
+$route['api/login'] = 'UserController/login';
+$route['api/register'] = 'UserController/register';
+$route['dashboard'] = 'UserController/dashboard';
+$route['auth/forgot_password'] = 'Auth/forgot_password';
+$route['auth/send_reset_link'] = 'Auth/send_reset_link';
+$route['auth/reset_password/(:any)'] = 'Auth/reset_password/$1';
+$route['auth/update_password'] = 'Auth/update_password';
+$route['auth/test_email'] = 'Auth/test_email';
+$route['settings'] = 'auth/settings';
+$route['auth/change_password'] = 'auth/change_password';
+$route['auth/update_profile'] = 'auth/update_profile';
+```
+
+---
+
+## Features
+
+### User Registration
+
+- Navigate to:
+
+```bash
+http://localhost/CodeIgniter/register
+```
+
+- Enter a valid email and password (Password must be 8 characters long and alphanumeric, e.g., `Afsar@123`).
+- Successfully register the user.
+
+### User Login
+
+- Navigate to:
+
+```bash
+http://localhost/CodeIgniter/login
+```
+
+- Enter your registered email and password to log in.
+
+### Password Reset
+
+- If you forgot your password, click on the **Forgot Password** link on the login page.
+- You will be redirected to:
+
+```bash
+http://localhost/CodeIgniter/auth/forgot_password
+```
+
+- Enter your registered email. If the email exists in the system, a reset link will be sent to your inbox.
+
+- Check your email, click on the reset link, and you'll be redirected to:
+
+```bash
+http://localhost/CodeIgniter/auth/reset_password/your_token
+```
+
+- Enter your new password and confirm it. Once submitted, your password will be updated, and you'll be redirected to the login page.
+
+### Profile Settings
+
+Once logged in, you can manage your account:
+
+- Navigate to:
+
+```bash
+http://localhost/CodeIgniter/settings
+```
+
+- **Change your password** by entering your current and new passwords.
+- **Update your profile** (full name, phone number, etc.).
+
+---
+
+## Conclusion
+
+This project provides a fully functional **authentication system** with JWT integration. Users can **register, log in, reset their password**, and **update their profiles**. This application serves as a solid foundation for more complex user management systems.
+
+Feel free to contribute or raise any issues you encounter.
+
+---
