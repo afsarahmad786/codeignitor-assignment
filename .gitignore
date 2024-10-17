@@ -1,0 +1,53 @@
+# CodeIgniter-specific files and directories
+application/cache/*
+application/logs/*
+!application/cache/index.html
+!application/logs/index.html
+
+# Composer dependencies (if using composer)
+vendor/
+
+# NPM packages (if using npm)
+node_modules/
+
+# Environment settings
+.env
+
+# OS generated files #
+######################
+.DS_Store
+Thumbs.db
+
+# System-specific files #
+########################
+*.bak
+*.swp
+*.swo
+*.tmp
+*.log
+
+# IDE specific #
+################
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# PHPUnit
+phpunit.xml
+phpunit.xml.dist
+
+# Ignore JWT library vendor (if using local lib)
+application/libraries/JWT/
+
+# Git
+.git/
+
+# Ignore Composer and PHPUnit logs
+composer.lock
+phpunit.result.cache
+coverage/
+
+# Ignore code coverage results
+.phpunit.result.cache
+coverage/
