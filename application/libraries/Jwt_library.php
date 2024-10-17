@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+// Import the JWT class from Firebase
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
@@ -9,10 +10,11 @@ class Jwt_library {
     private $key;
 
     public function __construct() {
-        $this->key = "dajdiaioaidanma"; // Change this to a strong key
+        // Use a strong key for encryption
+        $this->key = "dajdiaioaidanma";
     }
 
-    // Generate a JWT token
+    // Function to generate a JWT token
     public function generate_token($data) {
         $payload = [
             'iss' => "localhost", 
@@ -26,7 +28,7 @@ class Jwt_library {
         return JWT::encode($payload, $this->key, 'HS256');
     }
 
-    // Decode a JWT token
+    // Function to decode a JWT token
     public function decode_token($token) {
         try {
             return JWT::decode($token, new Key($this->key, 'HS256'));

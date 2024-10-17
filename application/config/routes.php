@@ -54,6 +54,12 @@ $route['login'] = 'UserController/login_view';
 $route['register'] = 'UserController/index';
 $route['api/login'] = 'UserController/login';
 $route['api/register'] = 'UserController/register';
+$route['dashboard'] = 'UserController/dashboard';
+$route['auth/forgot_password'] = 'Auth/forgot_password';
+$route['auth/send_reset_link'] = 'Auth/send_reset_link';
+$route['auth/reset_password/(:any)'] = 'Auth/reset_password/$1';
+$route['auth/update_password'] = 'Auth/update_password';
+$route['auth/test_email'] = 'Auth/test_email';
 // Migrations
 $route['migrate'] = 'MigrationController/migrate';  // Apply the latest migration
 $route['rollback'] = 'MigrationController/rollback';  // Rollback all migrations

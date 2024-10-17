@@ -1,12 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Create_users_table extends CI_Migration {
+class Migration_Create_password_resets_table extends CI_Migration {
 
     public function up() {
-        // Check if the table exists
-        if (!$this->db->table_exists('users')) {
-            // If the table doesn't exist, create it
+        if (!$this->db->table_exists('password_resets')) {
             $this->dbforge->add_field([
                 'id' => [
                     'type' => 'INT',
@@ -17,10 +15,9 @@ class Migration_Create_users_table extends CI_Migration {
                 'email' => [
                     'type' => 'VARCHAR',
                     'constraint' => '100',
-                    'null' => FALSE,
-                    'unique' => TRUE
+                    'null' => FALSE
                 ],
-                'password' => [
+                'token' => [
                     'type' => 'VARCHAR',
                     'constraint' => '255',
                     'null' => FALSE
@@ -28,16 +25,15 @@ class Migration_Create_users_table extends CI_Migration {
                 'created_at datetime default current_timestamp',
             ]);
             $this->dbforge->add_key('id', TRUE);
-            $this->dbforge->create_table('users');
+            $this->dbforge->create_table('password_resets');
         } else {
-            echo "Table 'users' already exists, skipping creation.";
+            echo "Table 'password_resets' already exists, skipping creation.";
         }
     }
 
     public function down() {
-        // Drop the users table if it exists
-        if ($this->db->table_exists('users')) {
-            $this->dbforge->drop_table('users');
+        if ($this->db->table_exists('password_resets')) {
+            $this->dbforge->drop_table('password_resets');
         }
     }
 }
