@@ -18,8 +18,8 @@ Before starting, ensure that you have the following installed on your machine:
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/your-repo/codeigniter-auth-system.git
-cd codeigniter-auth-system
+git clone https://github.com/afsarahmad786/codeignitor-assignment.git
+cd codeignitor-assignment
 ```
 
 ### Step 2: Set up CodeIgniter and PHP
