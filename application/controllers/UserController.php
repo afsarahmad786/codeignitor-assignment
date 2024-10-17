@@ -1,9 +1,11 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class UserController extends CI_Controller {
+class UserController extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('User_model');
         $this->load->library(['form_validation', 'session', 'jwt_library']);
@@ -11,12 +13,14 @@ class UserController extends CI_Controller {
     }
 
     // Load the registration form
-    public function index() {
+    public function index()
+    {
         $this->load->view('register'); // Load the registration view
     }
 
     // Handle user registration
-    public function register() {
+    public function register()
+    {
         // Set validation rules
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
@@ -46,41 +50,50 @@ class UserController extends CI_Controller {
     }
 
     // Load the login form
-    public function login_view() {
+    public function login_view()
+    {
         $this->load->view('login');
     }
 
     // Handle user login
-    public function login() {
+    public function login()
+    {
+
+        // Check if the user is already logged in
+        if ($this->session->userdata('user')) {
+            // Redirect to settings if the user is already logged in
+            redirect('/settings');
+        }
+
         // Set validation rules
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'required');
-    
+
         if ($this->form_validation->run() === FALSE) {
             // Reload the login form with validation errors
             $this->load->view('login');
         } else {
             $email = $this->input->post('email');
             $password = $this->input->post('password');
-    
+
             // Check if user exists
             $user = $this->User_model->email_exists($email);
-    
+
             if ($user && password_verify($password, $user->password)) {
                 // Generate JWT token for the user
                 $token_data = ['email' => $email];
                 $token = $this->jwt_library->generate_token($token_data);
-    
+
                 // Store token and user data in the session
                 $this->session->set_userdata('jwt_token', $token);
                 $this->session->set_userdata('user', [
                     'email' => $user->email,
                     'name' => $user->name,  // Assuming your User model has a 'name' field
-                    'id'=> $user->id,
-                    'name'=> $user->name,
-                    'phone'=> $user->phone,
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'phone' => $user->phone,
                 ]);
-    
+
                 // Redirect to settings page
                 redirect('/settings');
             } else {
@@ -90,10 +103,10 @@ class UserController extends CI_Controller {
             }
         }
     }
-    
 
-    public function dashboard() {
+
+    public function dashboard()
+    {
         $this->load->view('dashboard');
-    
     }
 }

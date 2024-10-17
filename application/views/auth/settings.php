@@ -44,10 +44,20 @@
                 transform: scale(1);
             }
         }
+
+        /* New Logout Button Style */
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
     </style>
 </head>
 
 <body class="d-flex align-items-center vh-100">
+    <div class="logout-btn">
+        <a href="<?php echo base_url('auth/logout'); ?>" class="btn btn-danger">Logout</a>
+    </div>
     <div class="container fade-in">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -92,42 +102,41 @@
                             </div>
 
                             <!-- Update Profile Section -->
-                                <div class="tab-pane fade" id="profile" role="tabpanel">
-                                    <form action="<?php echo base_url('auth/update_profile'); ?>" method="post">
-                                        <div class="mb-4">
-                                            <label for="name" class="form-label">Full Name</label>
-                                            <input type="text" name="name" class="form-control"
-                                                value="<?php echo isset($this->session->userdata('user')['name']) ? $this->session->userdata('user')['name'] : ''; ?>"
-                                                placeholder="Enter your name" required>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label for="email" class="form-label">Email Address</label>
-                                            <input type="email" name="email" class="form-control"
-                                                value="<?php echo isset($this->session->userdata('user')['email']) ? $this->session->userdata('user')['email'] : ''; ?>"
-                                                placeholder="Enter your email" required>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label for="phone" class="form-label">Phone Number (Optional)</label>
-                                            <input type="text" name="phone" class="form-control"
-                                                value="<?php echo isset($this->session->userdata('user')['phone']) ? $this->session->userdata('user')['phone'] : ''; ?>"
-                                                placeholder="Enter your phone number">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary w-100">Save Changes</button>
-                                    </form>
-                                </div>
-
+                            <div class="tab-pane fade" id="profile" role="tabpanel">
+                                <form action="<?php echo base_url('auth/update_profile'); ?>" method="post">
+                                    <div class="mb-4">
+                                        <label for="name" class="form-label">Full Name</label>
+                                        <input type="text" name="name" class="form-control"
+                                            value="<?php echo isset($this->session->userdata('user')['name']) ? $this->session->userdata('user')['name'] : ''; ?>"
+                                            placeholder="Enter your name" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="email" class="form-label">Email Address</label>
+                                        <input type="email" name="email" class="form-control"
+                                            value="<?php echo isset($this->session->userdata('user')['email']) ? $this->session->userdata('user')['email'] : ''; ?>"
+                                            placeholder="Enter your email" required readonly>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="phone" class="form-label">Phone Number (Optional)</label>
+                                        <input type="text" name="phone" class="form-control"
+                                            value="<?php echo isset($this->session->userdata('user')['phone']) ? $this->session->userdata('user')['phone'] : ''; ?>"
+                                            placeholder="Enter your phone number">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                                </form>
                             </div>
 
                         </div>
 
-                        <!-- Display Success/Error Messages -->
-                        <?php if ($this->session->flashdata('error')): ?>
-                            <div class="alert alert-danger mt-4"><?php echo $this->session->flashdata('error'); ?></div>
-                        <?php endif; ?>
-                        <?php if ($this->session->flashdata('success')): ?>
-                            <div class="alert alert-success mt-4"><?php echo $this->session->flashdata('success'); ?></div>
-                        <?php endif; ?>
                     </div>
+
+                    <!-- Display Success/Error Messages -->
+                    <?php if ($this->session->flashdata('error')): ?>
+                        <div class="alert alert-danger mt-4"><?php echo $this->session->flashdata('error'); ?></div>
+                    <?php endif; ?>
+                    <?php if ($this->session->flashdata('success')): ?>
+                        <div class="alert alert-success mt-4"><?php echo $this->session->flashdata('success'); ?></div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
